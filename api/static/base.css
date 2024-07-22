@@ -132,3 +132,27 @@ pre {
     font-family: 'Courier New', Courier, monospace;
     color: var(--text-colour-main);
 }
+
+@media only screen and (max-width: 768px) {
+    body {
+        flex-direction: column-reverse;
+    }
+
+    div.sidebar {
+        width: 100%;
+        position: relative;
+    }
+
+    div.profile {
+        flex-direction: row;
+    }
+
+    div.profile h3 {
+        display: none;
+    }
+
+    div.profile img {
+        max-width: 20%;
+        margin-right: 5%;
+    }
+}
