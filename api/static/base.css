@@ -1,70 +1,124 @@
-p {
-    color: #3B4E59;
+:root {
+    --bg-colour: #2B3942;
+    --text-colour-main: #E1F2BD;
+    --text-colour-alt: #F59078; 
+    --link-colour: #F2C879;
+    --link-colour-visited: #F26B83;
 }
+
 h1 {
-    color: #F26B83;
+    font-family: "Bungee Shade", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 4rem;
+    text-align: center;
+    margin-top: 0;
+    color: var(--link-colour-visited);
+}
+
+h2, h3, h4, h5, p, li, a {
+    font-family: "Jura", sans-serif;
+    font-optical-sizing: auto;
+    font-style: normal;
+    color: var(--text-colour-main);
+}
+
+h2 {
+    font-size: 2rem;
+    margin-bottom: 1.25rem;
+}
+
+h3 {
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    align-self: center;
+}
+
+p, a {
+    font-size: 1rem;
+}
+
+a {
+    color: var(--link-colour);
+}
+
+a:visited {
+    color: var(--link-colour-visited);
+}
+
+a:hover {
+    color: var(--link-colour-visited);
+}
+
+a:visited:hover {
+    color: var(--link-colour);
+}
+
+li {
+    list-style-type: none;
+    padding-bottom: 10px;
+}
+
+nav ul {
+   padding-inline-start: 20px;
+   font-size: 0.75rem;
+   margin: 0px;
+}
+
+nav li {
+    padding-bottom: 0px;
+}
+
+nav li a {
+    font-size: 0.75rem;
+}
+
+nav li a:visited {
+    color: var(--link-colour);
+}
+
+nav li a:visited:hover {
+    color: var(--link-colour-visited);
+}
+
+ul {
+    padding-inline-start: 0px;
 }
 
 body {
     display: flex;
     flex-direction: row;
-    background-color: #3B4E59;
+    background-color: var(--bg-colour);
 }
 
 nav {
-    text-align: right;
     display: flex;
     flex-direction: column;
+    font-size: 1.75rem;
 }
 
-.sidebar a:visited {
-    color: #F26B83;
-}
-
-.sidebar a:hover {
-    color: #F2C879;
-}
-
-ul {
-    list-style: none;
-}
-
-.sidebar {
-    display: flex;
-    flex-direction: column;
-    max-width: 20%;
+div.sidebar {
     width: 20%;
-    padding: 10px;
-    color: #E1F2BD;
+    margin: 10px;
+    height: fit-content;
+    position: sticky;
+    top: 20px;
 }
 
-.sidebar a {
-    color: #E1F2BD;
-}
-
-.mainPage {
-    max-width: 60%;
+div.mainPage {
     width: 60%;
-    background-color: #F2C879;
-    padding: 10px;
+    margin: 10px;
 }
 
-.profile {
+div.profile {
     display: flex;
     flex-direction: column;
-    align-items: center;
-}
-
-.profile * {
-    margin-bottom: 5px;
 }
 
 .profile img {
-    max-width: 70%;
-    outline: 2px solid #F26B83;
+    max-width: 50%;
+    outline: 2px solid var(--link-colour-visited);
     border-radius: 50%;
-}
-
-.sidebar a i {
-    padding-right: 5px;
+    align-self: center;
 }
