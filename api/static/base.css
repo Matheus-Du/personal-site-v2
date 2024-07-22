@@ -32,7 +32,7 @@ h3 {
     font-size: 1rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    align-self: center;
+    text-align: center;
 }
 
 p, a {
@@ -58,6 +58,13 @@ a:visited:hover {
 li {
     list-style-type: none;
     padding-bottom: 10px;
+}
+
+nav {
+    display: flex;
+    flex-direction: column;
+    font-size: 1.75rem;
+    padding-left: 1.5em;
 }
 
 nav ul {
@@ -92,14 +99,8 @@ body {
     background-color: var(--bg-colour);
 }
 
-nav {
-    display: flex;
-    flex-direction: column;
-    font-size: 1.75rem;
-}
-
 div.sidebar {
-    width: 20%;
+    width: 15%;
     margin: 10px;
     height: fit-content;
     position: sticky;
@@ -107,8 +108,8 @@ div.sidebar {
 }
 
 div.mainPage {
-    width: 60%;
     margin: 10px;
+    width: 70%;
 }
 
 div.profile {
@@ -117,8 +118,17 @@ div.profile {
 }
 
 .profile img {
-    max-width: 50%;
+    max-width: 60%;
     outline: 2px solid var(--link-colour-visited);
     border-radius: 50%;
     align-self: center;
+}
+
+a.recentLikesInfo {
+    vertical-align: top;
+}
+
+pre {
+    font-family: 'Courier New', Courier, monospace;
+    color: var(--text-colour-main);
 }
