@@ -17,4 +17,4 @@ jobs:
     - name: Build the Docker image
       run: |
         cd api
-        docker build . --file Dockerfile.prod --tag personal-site-prod:$(date +%s)
+        sudo docker build . --file Dockerfile.prod --tag personal-site-prod:$(date +%s)
