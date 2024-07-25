@@ -15,4 +15,6 @@ jobs:
     steps:
     - uses: actions/checkout@v4
     - name: Build the Docker image
-      run: docker build . --file api/Dockerfile.prod --tag personal-site-prod:$(date +%s)
+      run: |
+        cd api
+        docker build . --file Dockerfile.prod --tag personal-site-prod:$(date +%s)
