@@ -1,6 +1,6 @@
 name: Docker Image CI
 
-on:
+on: self-hosted
   push:
     branches: [ "main" ]
   pull_request:
