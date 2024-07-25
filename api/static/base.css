@@ -154,10 +154,11 @@ pre {
     font-size: 0.5rem;
 }
 
-.recent_like_title {
+a.recent_like_title {
     display: block;
     padding-left: 2%;
     font-size: 1.2rem;
+    width: fit-content;
 }
 
 div.recent_like_details {
