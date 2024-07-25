@@ -13,10 +13,10 @@ def main():
 def blogHome():
     return render_template("/blog/blogHome.html")
 
-@app.route("/showLikesInfo")
+@app.route("/getRecentLikes")
 def showLikesInfo():
     if htmx:
-        return render_template("/elements/test.html")
+        return render_template("/elements/recentLike.html")
     return Response(status=400)
 
 @app.errorhandler(404)

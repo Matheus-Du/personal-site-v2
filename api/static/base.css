@@ -28,7 +28,7 @@ h2 {
     margin-bottom: 1.25rem;
 }
 
-h3 {
+h4 {
     font-size: 1rem;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
@@ -152,6 +152,29 @@ pre {
 .recent_likes_span p {
     color: #2B3942;
     font-size: 0.5rem;
+}
+
+.recent_like_title {
+    display: block;
+    padding-left: 2%;
+    font-size: 1.2rem;
+}
+
+div.recent_like_details {
+    margin: 2%;
+    margin-bottom: 0%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: fit-content;
+}
+
+div.recent_like_details p {
+    margin: 0px;
+}
+
+hr {
+    border-color: var(--text-colour-main);
 }
 
 @media only screen and (max-width: 768px) {

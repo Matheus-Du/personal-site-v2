@@ -18,7 +18,7 @@
         <div class="sidebar">
             <div class="profile">
                 <img srcset="../static/images/profile.webp" type="image/webp" alt="profile" />
-                <h3>Matheus Duncan</h3>
+                <h4>Matheus Duncan</h4>
                 <ul>
                     <li>CS @ University of Alberta (2019-2024)</li>
                     <li>Prev Jr. Systems Developer @ Co-Operators</li>
@@ -45,7 +45,7 @@
             <h2 id="about_me">About Me</h2>
                 <p>Hi, I'm Matheus! I'm a Canadian new grad software developer with an interest in developing backend systems. I've been writing code since grade school (shoutout Adobe DreamWeaver) and graduated from the University of Alberta with a Bachelor of Science in Computer Science in 2024.</p>
                 <p>My career as a Software Developer started at Co-Operators, where I worked as an intern from 01/2022-01/2023. I returned to the Co-Operators on a different team in summer 2023 as my last internship before graduation.</p>
-                <p>If you want to know more about my work experience, checkout out my Timeline or download my Resume.</p>
+                <p>If you want to know more about my work experience, checkout out my <a href="#timeline">Timeline</a> or download my <a href="#resume">Resume</a>.</p>
                 <p>In my free time, I've also been known to work on some programming projects. Some of these projects have been for my own use (to learn or make my life easier) and some have been for classes or freelance work.</p>
                 <p>My favourite (and most comprehensive!) project so far has been Pronunciation Practice. This was a greenfield web app built for IlmHub, an Edmonton educational non-profit. It allows students to practice their Arabic reading and pronunciation skills from home using lessons assigned by their instructor. My team of 5 built this project in just 4 months and successfully deployed it to cloud, where it's been used since to help educate >500 students every year.</p>
             <div>
@@ -57,6 +57,7 @@
                         </div>
                     </span>
                 </h2>
+                <div hx-get="/getRecentLikes" hx-trigger="load"></div>
             </div>
             <h2 id="this_site">This Site</h2>
                 <p>This site was built to give me a place to share some info about myself and explore new technologies. My previous personal site was built with React and was beginning to lose performance due to typical React Bloat. I decided to do a rewrite using a simpler stack - HTML/CSS, HTMX, and Flask - to simplify the system and allow for more tinkering as well. It also allows me to move away from the React Single Page Application format and towards a more 'traditional' site design (which IMO suits personal sites better).</p>
