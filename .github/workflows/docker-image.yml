@@ -18,5 +18,5 @@ jobs:
       run: |
         cd api
         sudo docker build . --file Dockerfile.prod --tag personal-site:prod
-        sudo docker container kill personal-sit-:prod
+        sudo docker container kill personal-site-prod
         sudo docker run -p 8082:8000 --name personal-site-prod personal-site:prod
