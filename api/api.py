@@ -1,6 +1,9 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, Response
+from flask_htmx import HTMX
 
 app = Flask(__name__)
+htmx = HTMX(app)
+htmx.init_app(app)
 
 @app.route("/")
 def main():
@@ -9,6 +12,12 @@ def main():
 @app.route("/blog")
 def blogHome():
     return render_template("/blog/blogHome.html")
+
+@app.route("/showLikesInfo")
+def showLikesInfo():
+    if htmx:
+        return render_template("/elements/test.html")
+    return Response(status=400)
 
 @app.errorhandler(404)
 def page_not_found(error):
