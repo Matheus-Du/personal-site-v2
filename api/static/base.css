@@ -48,6 +48,7 @@ a:visited {
 }
 
 a:hover {
+    cursor: pointer;
     color: var(--link-colour-visited);
 }
 
@@ -124,13 +125,33 @@ div.profile {
     align-self: center;
 }
 
-a.recentLikesInfo {
+a.likesInfoToggle {
     vertical-align: top;
 }
 
 pre {
     font-family: 'Courier New', Courier, monospace;
     color: var(--text-colour-main);
+}
+
+.recent_likes_span:hover div {
+    display: block;
+}
+
+.recent_likes_span div {
+    background-color: #E1F2BD;
+    border-radius: 20%;
+    padding-left: 10px;
+    padding-right: 10px;
+    display: none;
+    position: absolute;
+    top: -30px;
+    left: 20px;
+}
+
+.recent_likes_span p {
+    color: #2B3942;
+    font-size: 0.5rem;
 }
 
 @media only screen and (max-width: 768px) {
@@ -141,6 +162,10 @@ pre {
     div.sidebar {
         width: 100%;
         position: relative;
+    }
+
+    div.mainPage {
+        width: 100%;
     }
 
     div.profile {

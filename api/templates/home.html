@@ -1,11 +1,14 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
     <head>
         <meta charset="UTF-8" />
+        <meta name="description" content="My personal site and blog page. Checkout my past proejcts, blog posts, and more!">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Matheus Duncan</title>
         <link rel="stylesheet" href="../static/base.css" />
         <link rel="icon" href="../static/images/favicon.ico" />
         <script src="https://kit.fontawesome.com/4b821a89f2.js" crossorigin="anonymous"></script>
+        <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
         <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Jura:wght@300..700&display=swap" rel="stylesheet">
@@ -45,14 +48,26 @@
                 <p>If you want to know more about my work experience, checkout out my Timeline or download my Resume.</p>
                 <p>In my free time, I've also been known to work on some programming projects. Some of these projects have been for my own use (to learn or make my life easier) and some have been for classes or freelance work.</p>
                 <p>My favourite (and most comprehensive!) project so far has been Pronunciation Practice. This was a greenfield web app built for IlmHub, an Edmonton educational non-profit. It allows students to practice their Arabic reading and pronunciation skills from home using lessons assigned by their instructor. My team of 5 built this project in just 4 months and successfully deployed it to cloud, where it's been used since to help educate >500 students every year.</p>
-            <h2 id="recent_likes">Recent Likes <a class="recentLikesInfo" href=""><i class="fa-regular fa-circle-question"></i></a> </h2>
+            <div>
+                <h2 id="recent_likes">Recent Likes 
+                    <span class="recent_likes_span" style="position: relative;">
+                        <a class="likesInfoToggle"><i class="fa-regular fa-circle-question"></i></a>
+                        <div>
+                            <p>This list is scraped from my most recent likes on HackerNews</p>
+                        </div>
+                    </span>
+                </h2>
+            </div>
             <h2 id="this_site">This Site</h2>
+                <p>This site was built to give me a place to share some info about myself and explore new technologies. My previous personal site was built with React and was beginning to lose performance due to typical React Bloat. I decided to do a rewrite using a simpler stack - HTML/CSS, HTMX, and Flask - to simplify the system and allow for more tinkering as well. It also allows me to move away from the React Single Page Application format and towards a more 'traditional' site design (which IMO suits personal sites better).</p>
+                <p>Everything is containerized using Docker and Docker Compose and deployed on my personal home server as an additional exercise in deploying web applications. In this site's current form, this is fairly simple, but I plan on adding some backend features that will require more intense containerization.</p>       
+                <p>I wanted to try building a modern site without using JavaScript as an exercise in moving away from traditional technologies. This site uses HTMX and flask as a simple web server to deliver a true RESTful API (data sent from the server is sent as HTML, therefore being truly REpresentational). If you want to know more about HTMX, I recommend the <a href="https://hypermedia.systems">Hypermedia Systems</a> textbook.</p>
             <h2 id="timeline">Timeline</h2>
-                <img alt="timeline" loading="eager" src="../static/images/timeline.svg" style="width: 100%;"/>
+                <img alt="timeline" src="../static/images/timeline.svg" style="width: 100%;"/>
             <h2 id="resume">Resume</h2>
                 <p>If you've made it this far (or even just clicked the 'Resume' link on the navbar), thanks for taking a look at this site! No piece of software is ever really 'done' and this site is no exception, so if you have any comments/suggestions/hatemail you can <a href="mailto:matheus@matheusdu.dev">send me a message</a>.</p>
                 <p>If you want to take a look at my resume and reach out, you can download it here in .pdf format:<br/><a href="../static/files/resume.pdf" download >Matheus Duncan Resume</a></p>
-                <p>Lastly, if you're looking for something to read, check out my blog (I mostly do project retrospectives and some tutorials). If you're looking for something high-quality to read, checkout out my bookshelf where I upload and review my recently-read books.</p>
+                <p>Lastly, if you're looking for something to read, check out my <a href="/blog">blog</a> (I mostly do project retrospectives and some tutorials). If you're looking for something high-quality to read, checkout out my <a href="/bookshelf">bookshelf</a> where I upload and review my recently-read books.</p>
             <pre>
               _..._
             .'     '.      _
