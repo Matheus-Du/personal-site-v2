@@ -39,7 +39,7 @@ def update_coll(collection, upvoted_posts):
 def main():
 	load_dotenv()
 	upvoted = get_upvoted()
-	conn = MongoClient("mongodb://root:example@localhost:27117/")
+	conn = MongoClient(f"mongodb://{os.getenv('MONGOUN')}:{os.getenv('MONGOPW')}@localhost:27117/")
 	db = conn.personal_site
 	db.drop_collection("upvoted_posts")
 	db.create_collection("upvoted_posts")
