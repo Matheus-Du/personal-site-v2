@@ -1,0 +1,23 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+
+  build:
+
+    runs-on: self-hosted
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: |
+        cd api
+        sudo docker build . --file Dockerfile.prod --tag personal-site:prod
+        sudo docker stop personal-site-prod || true
+        sudo docker rm personal-site-prod || true
+        sudo docker run -d -p 8082:8000 --restart always --name personal-site-prod personal-site:prod
