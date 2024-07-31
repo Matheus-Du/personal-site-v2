@@ -1,0 +1,40 @@
+services:
+
+  api:
+    container_name: frontend-prod
+    build:
+      context: api
+      dockerfile: Dockerfile.dev
+    ports:
+      - 5001:5000
+    environment:
+      MONGOUN: root
+      MONGOPW: example
+    restart: always
+    depends_on:
+      - mongo
+
+  mongo:
+    container_name: mongo-db
+    image: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: example
+    ports:
+        - 27119:27019
+    volumes:
+      - /datadir:/data/db
+
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8091:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: example
+      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27019/
+      ME_CONFIG_BASICAUTH: false
+    depends_on:
+        - mongo
