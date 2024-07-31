@@ -3,6 +3,7 @@ from pymongo import MongoClient
 import os
 
 app = Flask(__name__)
+app.secret_key = os.environ['APPKEY']
 
 def get_hn_posts(page):
     conn = MongoClient(f"mongodb://{os.environ['MONGOUN']}:{os.environ['MONGOPW']}@mongo:27017/")

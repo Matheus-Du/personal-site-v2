@@ -167,4 +167,3 @@ package-lock.json
 
 # Docker
 datadir/
-secrets/

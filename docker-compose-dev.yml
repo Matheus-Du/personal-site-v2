@@ -5,10 +5,10 @@ services:
     build:
       context: frontend
       dockerfile: Dockerfile.dev
+    environment:
+      APPKEY: ${FRONTENDAPPKEY}
     ports:
       - 8082:5001
-    environment:
-      APPKEY: k12Ucv953gcITag006o8d6xD3TI5Q2XT
     restart: always
     depends_on:
       - api
@@ -18,11 +18,12 @@ services:
     build:
       context: api
       dockerfile: Dockerfile.dev
+    environment:
+      MONGOUN: ${MONGOUN}
+      MONGOPW: ${MONGOPW}
+      APPKEY: ${APIAPPKEY}
     ports:
       - 8081:5000
-    environment:
-      MONGOUN: root
-      MONGOPW: example
     depends_on:
       - mongo
 
@@ -31,8 +32,8 @@ services:
     image: mongo
     restart: always
     environment:
-      MONGO_INITDB_ROOT_USERNAME: root
-      MONGO_INITDB_ROOT_PASSWORD: example
+      MONGO_INITDB_ROOT_USERNAME: ${MONGOUN}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGOPW}
     ports:
         - 27117:27017
     volumes:
@@ -44,9 +45,9 @@ services:
     ports:
       - 8090:8081
     environment:
-      ME_CONFIG_MONGODB_ADMINUSERNAME: root
-      ME_CONFIG_MONGODB_ADMINPASSWORD: example
-      ME_CONFIG_MONGODB_URL: mongodb://root:example@mongo:27017/
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${MONGOUN}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${MONGOPW}
+      ME_CONFIG_MONGODB_URL: ${MONGOURL}
       ME_CONFIG_BASICAUTH: false
     depends_on:
         - mongo
