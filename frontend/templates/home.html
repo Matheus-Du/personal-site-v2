@@ -57,7 +57,10 @@
                         </div>
                     </span>
                 </h2>
-                <div hx-get="/upvotedPosts" hx-trigger="load"></div>
+                <div id="upvoted_posts" hx-get="/upvotedPosts/" hx-trigger="load"></div>
+                <button hx-post="/upvotedPosts/" hx-trigger="click" hx-target="#upvoted_posts" hx-swap="beforeend" onclick="">
+                    Get More
+                </button>
             </div>
             <h2 id="this_site">This Site</h2>
                 <p>This site was built to give me a place to share some info about myself and explore new technologies. My previous personal site was built with React and was beginning to lose performance due to typical React Bloat. I decided to do a rewrite using a simpler stack - HTML/CSS, HTMX, and Flask - to simplify the system and allow for more tinkering as well. It also allows me to move away from the React Single Page Application format and towards a more 'traditional' site design (which IMO suits personal sites better).</p>
