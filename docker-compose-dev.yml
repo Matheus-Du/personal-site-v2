@@ -37,7 +37,7 @@ services:
     ports:
         - 27117:27017
     volumes:
-      - /personal-site/data:/data/db
+      - /personal_sit_data:/data/db
 
   mongo-express:
     image: mongo-express
