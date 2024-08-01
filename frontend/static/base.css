@@ -192,8 +192,13 @@ button:hover {
 }
 
 @media only screen and (max-width: 768px) {
+
     body {
         flex-direction: column-reverse;
+    }
+
+    h1 {
+        font-size: 3rem;
     }
 
     div.sidebar {
@@ -204,11 +209,12 @@ button:hover {
     }
 
     div.mainPage {
-        width: fit-content;
+        width: 100%;
+        margin: 0px;
     }
 
     div.profile {
-        width: fit-content;
+        width: 100%;
         flex-direction: row;
     }
 
