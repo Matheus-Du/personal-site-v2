@@ -166,4 +166,4 @@ node_modules/
 package-lock.json
 
 # Docker
-datadir/
+db_data/
