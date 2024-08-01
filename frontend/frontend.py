@@ -1,4 +1,4 @@
-from flask import Flask, render_template, Response, session, request
+from flask import Flask, render_template, session, request, send_file
 import requests
 from flask_htmx import HTMX
 import os
@@ -23,6 +23,10 @@ def upvoted():
         session['page'] += 1
     posts = requests.get(f"http://api:5000/getUpvoted/{session['page']}")
     return posts.text
+
+@app.route("/getResume", methods=['GET'])
+def getResume():
+    return send_file('static/files/Matheus Duncan Resume.pdf', mimetype='application/pdf')
 
 @app.route("/blog")
 def blogHome():
