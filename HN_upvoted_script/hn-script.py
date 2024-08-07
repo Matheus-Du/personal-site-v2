@@ -2,7 +2,8 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import os
-from pymongo import MongoClient
+from pymongo import MongoClient, timeout as pymongo_timeout
+from pymongo.errors import PyMongoError, ConnectionFailure, OperationFailure
 
 def get_upvoted():
 	with requests.Session() as session:
@@ -38,12 +39,36 @@ def update_coll(collection, upvoted_posts):
 
 def main():
 	load_dotenv()
-	upvoted = get_upvoted()
-	conn = MongoClient(f"mongodb://{os.getenv('MONGOUN')}:{os.getenv('MONGOPW')}@localhost:27117/")
-	db = conn.personal_site
-	db.drop_collection("upvoted_posts")
+	# get upvoted posts; if this doesn't work, throw an exception and exit without updating DB
+	try:
+		upvoted = get_upvoted()
+		if len(upvoted) == 0: raise Exception
+	except Exception as exc:
+		print(f"Error: Couldn't retrieve updated posts\n{exc}")
+		return
+	
+	conn = MongoClient(f"mongodb://{os.getenv('MONGOUN')}:{os.getenv('MONGOPW')}@localhost:27117/?timeoutMS=10000")
+	try:
+		db = conn.personal_site
+	except Exception as exc:
+		print(f"Error: Cannot connect to Database\n{exc}")
+		return
+	try:
+		db.validate_collection("upvoted_posts")
+	except OperationFailure: pass
+	else: 
+		# if collection already exists (should), create a backup and drop collection
+		old_posts = db.upvoted_posts.find()
+		db.drop_collection("upvoted_posts")
+
 	db.create_collection("upvoted_posts")
-	update_coll(db.upvoted_posts, upvoted)
+
+	try:
+		update_coll(db.upvoted_posts, upvoted)
+	except PyMongoError as exc:
+		# if an error occurs when adding new data to collection, add old data back
+		db.upvoted_posts.insert_many(old_posts)
+		print(f"Error inserting posts into collection\n{exc}")
 
 
 if __name__ == '__main__':
