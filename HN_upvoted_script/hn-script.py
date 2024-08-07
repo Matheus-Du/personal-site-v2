@@ -5,6 +5,9 @@ import os
 from pymongo import MongoClient, timeout as pymongo_timeout
 from pymongo.errors import PyMongoError, ConnectionFailure, OperationFailure
 
+def test():
+	print("you shouldn't see this, but I should.")
+
 def get_upvoted():
 	with requests.Session() as session:
 			posts = []
