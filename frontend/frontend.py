@@ -32,6 +32,14 @@ def getResume():
 def blogHome():
     return render_template("/blog/blogHome.html")
 
+@app.route("/bookshelf")
+def bookshelf():
+    return render_template("/pages/bookshelf.html")
+
+@app.route("/projects")
+def projects():
+    return render_template("/pages/projects.html")
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template("/pages/404.html"), 404

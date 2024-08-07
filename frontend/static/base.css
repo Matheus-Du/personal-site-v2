@@ -191,6 +191,18 @@ button:hover {
     cursor: pointer;
 }
 
+div.construction {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+}
+
+div.construction img {
+    margin: 1em;
+    width: 20%;
+    height: 20%;
+}
+
 @media only screen and (max-width: 768px) {
 
     body {
