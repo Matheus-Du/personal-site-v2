@@ -30,7 +30,7 @@ def getResume():
 
 @app.route("/blog")
 def blogHome():
-    return render_template("/blog/blogHome.html")
+    return render_template("/pages/blog.html")
 
 @app.route("/bookshelf")
 def bookshelf():
