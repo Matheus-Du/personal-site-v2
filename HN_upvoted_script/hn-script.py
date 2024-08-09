@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 import os
 from pymongo import MongoClient, timeout as pymongo_timeout
 from pymongo.errors import PyMongoError, ConnectionFailure, OperationFailure
+from datetime import datetime, timezone
 
 def get_upvoted():
 	with requests.Session() as session:
@@ -36,6 +37,7 @@ def update_coll(collection, upvoted_posts):
 			'date_posted': date}
 		for [post_id, title, date, link] in upvoted_posts]
 	)
+	print(f"{datetime.now(timezone.utc)}	Inserted {len(upvoted_posts)} documents successfully.")
 
 
 def main():
