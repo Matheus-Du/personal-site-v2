@@ -32,6 +32,10 @@ def getResume():
 def blogHome():
     return render_template("/pages/blog.html")
 
+@app.route("/blog/homeServer")
+def postHomeServer():
+    return render_template("/pages/blog_posts/homeServer.html")
+
 @app.route("/bookshelf")
 def bookshelf():
     return render_template("/pages/bookshelf.html")

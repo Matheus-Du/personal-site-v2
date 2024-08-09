@@ -1,5 +1,6 @@
 :root {
-    --bg-colour: #2B3942;
+    --bg-colour: #2b3942;
+    --bg-colour-offset: #546a78;
     --text-colour-main: #E1F2BD;
     --text-colour-alt: #F59078; 
     --link-colour: #F2C879;
@@ -185,6 +186,24 @@ button {
     border: none;
     padding-left: 10px;
     padding-right: 10px;
+}
+
+code {
+    color: var(--text-colour-alt);
+    font-family: 'Courier New', Courier, monospace;
+    background-color: var(--bg-colour-offset);
+    border-radius: 10px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+
+code.code_block {
+    display: block;
+    width: fit-content;
+    margin: 5%;
+    margin-top: 1em;
+    margin-bottom: 1em;
+    padding: 5px;
 }
 
 button:hover {

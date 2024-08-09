@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Building a Linux Home Server - Matheus Duncan</title>
+        <meta name="description" content="A Complete Guide to Building and Deploying a Website on Your Home Server">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="../static/base.css" />
+        <link rel="icon" href="../static/images/favicon.ico" />
+        <script src="https://kit.fontawesome.com/4b821a89f2.js" crossorigin="anonymous"></script>
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Bungee+Shade&family=Jura:wght@300..700&display=swap" rel="stylesheet">
+    </head>
+
+    <body>
+        <div class="sidebar">
+            <div class="profile">
+                <img srcset="../static/images/profile.webp" type="image/webp" alt="profile" />
+                <h4>Matheus Duncan</h4>
+                <ul>
+                    <li>CS @ University of Alberta (2019-2024)</li>
+                    <li>Prev Jr. Systems Developer @ Co-Operators</li>
+                    <li>
+                        <a href="https://www.linkedin.com/in/matheus-duncan" target="_blank" rel="noreferrer">
+                            <i class="fa-brands fa-linkedin">&nbsp;</i>LinkedIn
+                        </a>
+                    </li>
+                    <li>
+                        <a href="https://github.com/Matheus-Du" target="_blank" rel="noreferrer">
+                            <i class="fa-brands fa-square-github">&nbsp;</i>GitHub
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:matheus@matheusdu.dev">
+                            <i class="fa-solid fa-envelope">&nbsp;</i>Mail
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="mainPage">
+            <h1>A Complete Guide to Building and Deploying a Website on Your Home Server</h1>
+            <p>Taking the plunge from a cloud hosting provider such as Heroku to hosting your website on a home server can be daunting. From configuring your router to setting up a reverse proxy, there is a plethora of strange terms and new concepts to learn. With this guide, I'm hoping to provide an overview of the process and a rough roadmap to follow.</p>
+            <h2>Prologue: Why host on a home server?</h2>
+            <p>With the huge selection of cloud-based hosting providers available today, you might be questioning why a self-hosted solution would ever be useful. While it's true that self-hosting is not for everyone (or every website), there are a few advantages to consider:</p>
+            <ol style="list-style-type: lower-greek;">
+                <li><b>Cost</b>: If you already have a home server, hosting your website on it is essentially free. Even if you don't, a second-hand PC can be purchased for well under $100 thanks to COVID making office PCs essentially obsolete. This will be more than sufficient for hosting a small website or personal blog. Comparing this one-time fee to the monthly costs and variable pricing of a cloud hosting provider, the savings can be significant.</li>
+                <li><b>Control</b>: With a self-hosted solution, you have complete control over your website and anything else you choose to host on your server. You can install whatever software you want, and configure it however you want. The usefulness of having this level of control may vary depending on your use case, but it's important to consider.</li>
+                <li><b>Learning</b>: If you're interested in learning more about networking or server administration, self-hosting is a great way to get hands-on experience. You'll gain a better understanding of DNS, SSL/TLS, and other important networking concepts. Having an essentially wide-open playground to experiment in means the learning opportunities are endless.</li>
+            </ol>
+            <h2>Part 1: Setting up your server</h2>
+            <h3>Hardware</h3>
+            <p>The first step is to choose a server to host your website on. If you already have a home server, you can skip this step. If not, you can choose to build your own PC or pick up a second-hand office PC for under $100. Whatever you choose, make sure your server is capable of running 24/7 and has enough storage for your website and any other files you want to host. You'll also likely want a machine with at least 8GB of RAM and an SSD for better performance and reliability. Your server should (obviously) also be able to connect to the internet/your local network via ethernet or WiFi.</p>
+            <h3>Operating System</h3>
+            <p>Once you have your server, you'll need to install an operating system. I'll be using Ubuntu Server in this tutorial as it's well-supported and popular, so plenty of documentation can be found online. You can download the latest version from the <a href="https://ubuntu.com/download/server">Ubuntu website</a>. Once you've downloaded the ISO, you'll need to create a bootable USB drive. If you're using Windows, you can use <a href="https://rufus.ie/">Rufus</a> to do this. If you're using macOS, you can use <a href="https://www.balena.io/etcher/">Etcher</a>. Plug your bootable USB into your server and boot from it in the BIOS. Check out the <a href="https://ubuntu.com/server/docs/installation">Ubuntu server install guide</a> for detailed instructions on how to complete the installation.</p>
+            <h3>SSH</h3>
+            <p>SSH (Secure SHell) is a way to access your server remotely from another PC. SSH should be enabled by default on Ubuntu Server, but you can check by running the following command on your server:</p>
+            <code class="code_block">sudo systemctl status ssh</code>
+            <p>If SSH is not enabled, you can enable it by running <code>sudo systemctl enable ssh</code>. If you're using Linux or MacOS, you can then connect to your server by running <code>ssh &lt;username&gt;@&lt;ip_address&gt;</code> from another PC (replace <code>&lt;ip_address&gt;</code> with the local IP of your server).  You'll be prompted to enter your password, and then you'll be connected to your server.</p>
+            <p>For this to work, you'll need to be on the same local network as your PC (check out the end of this blog for info on SSHing from outside networks).</p>
+            <p>If you're using Windows, you can use <a href="https://www.putty.org/">PuTTY</a> to SSH into your server, but you really should be using <a href="https://learn.microsoft.com/en-us/windows/wsl/install">WSL</a> if you aren't already.</p>
+            <h2>Part 2: Docker and Containerization</h2>
+            <p>Now that we have a basic home server up-and-running, we can start to think about how we're going to host our website. While we could configure Nginx and our site without Docker, containerizing your site allows for easy deployment and management.</p>
+            <h3>Docker</h3>
+            <p><a href="https://www.docker.com/">Docker</a> is a program that allows you to run single applications in individual containers. Each container is isolated from the rest of the system and has its own filesystem and network, allowing us to run multiple applications on the same server without having to worry about unintended interactions between programs. Docker can be difficult to understand at first, but it's extremely useful once you understand the basics. There are plenty of <a href="https://docker-curriculum.com/">great tutorials</a> and <a href="https://www.manning.com/books/docker-in-action-second-edition">textbooks</a> available if you want to learn more. For now, I'll assume you have a basic understand of Docker and know how to build and run containers from images.</p>
+            <p>If you're just getting started with Docker, I recommend checking out <a href="https://www.portainer.io/">portainer</a>, which can be run as a Docker container and provides a web UI for managing your containers. It's not necessary, but it makes managing and viewing your containers much easier.</p>
+            <h3>Containerizing our Website</h3>
+            <p>If you're just looking to host a static website, we can easily create a Dockerfile to build a container for our site. Check out the <a href="https://github.com/Matheus-Du/personal-site/blob/main/frontend/Dockerfile.prod">Dockerfile</a> for this site for an example, or <a href="https://mherman.org/blog/dockerizing-a-react-app/">this tutorial</a> if you want a full step-by-step walkthrough. We can then build and run our container with the following commands from the root directory of our project (where our Dockerfile is located):</p>
+            <code class="code_block">docker build -t &lt;image_name&gt; -f Dockerfile.prod .<br/>docker run -d -p 3000:80 -u root --restart=unless-stopped &lt;image_name&gt;</code>
+            <p>Let's take a quick look at what these commands will do:</p>
+            <ul>
+                <li><code>docker build -t &lt;image_name&gt; -f Dockerfile.prod .</code>: This command will build a Docker image from our Dockerfile. The <code>-t</code> flag allows us to specify a name for our image, and the <code>-f</code> flag allows us to specify the name of our Dockerfile. The <code>.</code> at the end of the command tells Docker to look for the Dockerfile in the current directory.</li>
+                <li><code>docker run -d -p 3000:80 -u root --restart=unless-stopped &lt;image_name&gt;</code>: This command will run our Docker image as a container. The <code>-rm</code> flag tells Docker to remove the container once it's stopped. The <code>-d</code> flag tells Docker to run the container in the background. The <code>-p</code> flag tells Docker to map port 3000 on our server to port 80 in our container. The <code>-u</code> flag tells Docker to run the container as root, which is necessary since we're changing the container <code>USER</code> in the Dockerfile (unless you're executing the <code>docker run</code> command as root). The <code>--restart=unless-stopped</code> flag tells Docker to restart the container if it crashes or is stopped. The <code>&lt;image_name&gt;</code> at the end of the command specifies which image to run.</li>
+            </ul>
+            <p>The result should be that your static site can now be viewed from port 3000 on your server. If everything is working correctly, you should be able to navigate to <code>&lt;server_local_ip&gt;:3000</code> from your PC and see your site.</p>
+            <p>If you're planning on hosting a dynamic site, the containerization process is more complex and requires more advanced knowledge of Docker and Docker compose. For the sake of brevity, I won't cover this process, but there are plenty of <a href="https://siddharth-lakhara.medium.com/dockerizing-a-full-stack-js-app-ceb99411996e">excellent tutorials</a> available online.</p>
+            <h2>Part 3: Domains, DNS, and SSL/TLS</h2>
+            <p>With our site now running on our server as a Docker container, we can start to think about how we're going to serve it to the public via the internet. Right now, the only people who can access our site are people on our local network. To make our site accessible to the public, we'll need to setup a custom domain and configure our DNS.</p>
+            <h3>Domains</h3>
+            <p>The first thing every good website needs is a good domain name. If you already have a domain name, you can skip this step. If not, you'll need to purchase one from a domain registrar. I've previously used <a href="https://domains.google/">Google Domains</a>, but you'll likely have to find another option as Google Domains is <a href="https://www.prnewswire.com/news-releases/squarespace-enters-definitive-agreement-to-acquire-google-domains-assets-301852507.html">being acquired by Squarespace</a> sometime in the future. <a href="https://www.namecheap.com/">Namecheap</a> seems to be the least-expensive registrar I can find, but any legitimate registrar should work.</p>
+            <h3>Cloudflare CDN</h3>
+            <p>One of the big security issues with self-hosting a website is that anybody can view what IP address the domain redirects to. This means that, without some intermediary, anybody who knows about your website can also know your home IP address.</p>
+            <p>To avoid this, we'll use <a href="https://www.cloudflare.com/">Cloudflare</a> as an intermediary. Cloudflare is a CDN (Content Delivery Network) that provides a variety of services, including DNS management, SSL/TLS certificates, and DDoS protection. The important feature for us is that Cloudflare also acts as a proxy, meaning all requests to your site will go through Cloudflare before reaching your server, hiding our home IP address from the outside world.</p>
+            <p>To get started, create a free account and add your site to the list of websites associated with your account. Cloudflare will then scan your DNS records and import them. You'll then need to change your nameservers to point to Cloudflare. This can be done by going to your domain registrar and changing the nameservers to the ones provided by Cloudflare. Once you've done this, you should see a green checkmark next to your domain in Cloudflare. This means that Cloudflare is now managing your DNS records. There's no need to worry about what this means yet, but we'll cover DNS records in the next section.</p>
+            <p>With Cloudflare setup, you can take a deeper look at the other features it provides from the dashboard. For now, we'll just focus on using Cloudflare for DNS resolution and SSL/TLS certificates, but you can also configure Cloudflare for many other purposes.</p>
+            <h3>DNS Resolution</h3>
+            <p>After setting up Cloudflare, you'll be able to view your existing DNS records under the <b>DNS</b> tab on the left of the dashboard. On your first time visiting this page, you'll likely see a few DNS records that Cloudflare imported from your domain registrar. These records are used to point your domain to your public IP address. For now, the only record you need is a single <b>A</b> record with your domain name as the <b>Name</b> and your home IP address as the <b>IPv4 address</b> (if you don't know your public IP, just google "my ip"). Make sure that each DNS record is <b>proxied</b>, as this will hide your IP from people connecting to your site. You can delete any other records that Cloudflare imported. All this does is tell cloudflare to route any requests to your domain to your home IP address.</p>
+            <p>With DNS setup, your domain will now redirect to your home IP address. However, if you try to access your site, you'll likely get a <b>502 error</b>. This is because we haven't configured our server to handle requests from Cloudflare yet. We'll cover this in Part 4, but first, there's one last thing we need to do in Cloudflare.</p>
+            <h3>SSL/TLS Certificates</h3>
+            <p>If you have a website in the modern age, you'll need to have an SSL/TLS certificate. SSL/TLS certificates are used to encrypt traffic between your server and the client, preventing other people from intercepting and reading your traffic. SSL/TLS certificates are also used to verify that the server the client is connecting to is the correct server. Without an SSL/TLS certificate, your site will be marked as insecure by most browsers (this is the difference between http and https).</p>
+            <p>Cloudflare provides SSL/TLS certificates for all domains that use Cloudflare's nameservers. These certs are free, long-lasting (up to 15 years), and trusted by all browsers. To enable SSL/TLS certificates, go to the <b>SSL/TLS</b> tab on the left of the dashboard and select <b>Full (strict)</b> under the <b>Encryption mode</b> dropdown. This will enable SSL/TLS certificates for your site. You can also enable <b>Always use HTTPS</b> to force all traffic to your site to use HTTPS.</p>
+            <p>Within the <b>SSL/TLS</b> dropdown, navigate to the <b>Origin Server</b> page and create an Origin Certificate. List the hostnames you want the certificate to cover (your domain and any/all subdomains) and select <b>RSA</b> as the key type. Once you've created the certificate, Cloudflare will provide you with a private key and a certificate as <b>.pem</b> files. Save these onto your PC, and store a backup of them somewhere safe (archiving with a password using 7zip and storing the archive in the cloud is one secure option). We'll need these files in a minute when we configure our reverse proxy.</p>
+            <h2>Putting Everything Together</h2>
+            <p>With our website up and running on our local network and our domain pointing to our home IP address, the only thing left is to connect the two ends together. To do this, we'll need to cover two topics: port forwarding and reverse proxies.</p>
+            <h3>Port Forwarding</h3>
+            <p>Port forwarding is the process of forwarding requests from a specific port on your router to a specific port on your home server. Incoming requests from the internet will be sent to your router through ports 443 (for secure web traffic) and 80 (for insecure web traffic). When our router recieves these requests, we'll need to tell it to send these requests to our server.</p>
+            <p>Setting up port forwarding is relatively easy, but the process varies depending on your router and ISP. To get started, find your ISPs instructions for port forwarding for your router, then forward ports 80 and 443 to your server's local IP address. If you need more info, <a href="https://www.noip.com/support/knowledgebase/general-port-forwarding-guide/">this guide</a> provides a good overview of the process.</p>
+            <p>However, forwarding these ports still won't allow us to access our site from the internet since our server has no idea where to send the incoming requests. This is where reverse proxies come in.</p>
+            <h3>Reverse Proxies</h3>
+            <p>A reverse proxy is a <a href="https://www.techtarget.com/whatis/definition/Web-server">web server</a> that redirects incoming requests to other servers depending on what DNS record the request is for. At first this might seem unnecessary since we only have one server, but recall that Docker containers essentially act as their own independent systems. This means that we can run multiple containers on the same server, and use a reverse proxy to redirect requests to the correct container based on the DNS record.</p>
+            <p>It's possible to configure a web server from scratch using a systemd service or Docker image such as <a href="https://www.nginx.com/">Nginx</a> or <a href="https://httpd.apache.org/">Apache hhtpd</a>, but the easiest way to get started is by using <a href="https://nginxproxymanager.com/">Nginx proxy manager</a>. This is an easy-to-use web UI for managing reverse proxies that can be run as a Docker container. To get started, take a look at the <a href="https://nginxproxymanager.com/guide/#quick-setup">Nginx proxy manager docs</a> for setup instructions. Once you've setup the container on your home server, you can access the web UI by navigating to <code>&lt;server_local_ip&gt;:81</code> from your PC. You'll be prompted to create an admin account, after which you'll be redirected to the web UI.</p>
+            <p>The first thing we need to do is add our Cloudflare SSL cert to the proxy manager. Navigate to the <b>SSL Certificates</b> tab, then <b>Add SSL Certificate</b>. Select <b>Custom</b>, then add a name as well as your private key and certificate files that we downloaded from Cloudflare. Once you've done this, click <b>Save</b> and then <b>Apply Changes</b>. You should now see your SSL certificate listed under the <b>SSL Certificates</b> tab.</p>
+            <p>To setup our default domain, we need to create a new proxy host. Click on the <b>Proxy Hosts</b> tab on the dashboard, and then <b>Add Proxy Host</b>. Enter your <b>Domain Names</b>, in this case your default domain (i.e. <code>matheusdu.dev</code>), and then enter your server's local IP address as the <b>Forward Hostname/IP</b>. For the <b>Forward Port</b>, enter the port that your website's docker container is forwarded to (in our case, 3000). Navigate to the <b>SSL</b> section and select your SSL certificate from the dropdown. Enable the <b>Force SSL</b> and <b>HTTP/2 Support</b> options. Finally, click <b>Save</b>. Now your default domain should be pointing to the Docker container running your website.</p>
+            <p>With Nginx proxy manager, we've now pointed our domain to our Docker container without exposing any ports to the internet besides ports 443 and 80, both of which are protected by our Cloudflare CDN.</p>
+            <h3>The Fruits of Our Labor</h3>
+            <p>After setting up our reverse proxy, we have finished the connection between our domain and our website running on our home server. If everything is working correctly, you should now be able to navigate to your domain and see your website. Congratulations, you've successfully setup a website on your home server!</p>
+            <h2>Part 4: Addendum and Next Steps</h2>
+            <h3>Indexing and SEO</h3>
+            <p>Somewhat surprisingly, having your site be accessible via search is not a given. Google can take anywhere from weeks to months to index your site, and any changes made afterwards (e.g. a new blog post) can take just as long to be indexed. If you want your site to be indexed by search engines quickly, you'll need to submit your site to the search engine. For Google, you can use <a href="https://search.google.com/search-console/welcome">Google search console</a>. You'll need to verify that you own the domain by adding a TXT record to your DNS records via Cloudflare. Once you've done this, you can submit your site to Google for indexing. This process can take a few days, but once it's done, your site should be indexed by Google.</p>
+            <p>As for SEO, check out <a href="https://developer.chrome.com/docs/lighthouse/overview/">lighthouse</a> for a great tool for analyzing your site's SEO. Lighthouse will also rate your site's performance and You can also check out <a href="https://www.searchenginejournal.com/seo-guide/">this guide</a> for a more in-depth look at SEO.</p>
+            <h3>SSH from outside networks</h3>
+            <p>Setting up SSH to allow connections outside of the network is, at first glance, a trivial topic. All you'd need to do is forward port 22 from your home server and then connect to the server using your public IP address.</p>
+            <p><strong>**Don't do this.**</strong> Allowing anyone on the internet to connect to your server via SSH is a terrible idea. Within a few minutes of opening any ports to the internet, you'll notice a significant increase in the number of people trying to connect to port 22 from all kinds of seedy locales. If you allow connections to port 22, it's only a matter of time before someone gains access to your server and does something malicious.</p>
+            <p>Instead of this, we'll need to use a Virtual Private Network (VPN) to connect to our home network from outside networks. This allows us to open only one port - the one used by the VPN - and then connect to our server through the VPN. This is far more secure and can be setup to run from your home server. Additionally, it provides a level of security when connecting to public networks, as you can route all your traffic through your home network, preventing anyone on the public network from intercepting your traffic.</p>
+            <p>Setting up a custom VPN is outside the scope of this article, but I recommend using OpenVPN as it's free and open-source. There are plenty of <a href="https://openvpn.net/community-resources/how-to/">tutorials</a> for setting up a VPN, but I recommend <a href="https://www.cyberciti.biz/faq/howto-setup-openvpn-server-on-ubuntu-linux-14-04-or-16-04-lts/">this script</a> for a quick and easy setup.</p>
+            <h3>Subdomains</h3>
+            <p>If you want to host multiple sites on your home server, you can use subdomains to route requests to different containers. For example, you could have <code>blog.matheusdu.dev</code> route to a Docker container running a blog, and <code>matheusdu.dev</code> route to a container running a portfolio site. To do this, you'll need use Nginx proxy manager and create a new proxy host for each subdomain. The process is the same as creating a proxy host for your default domain, but you'll need to create a new proxy host for each subdomain you want to use. Just remember to create a new DNS record for each subdomain on Cloudflare.</p>
+            <h3>Some More Ideas</h3>
+            <p>Now that you have a website running on your home server, you can start to think about what else you can do with it. Here are a few ideas to get you started:</p>
+            <ul style="list-style-type: circle;">
+                <li>Host a <a href="https://wordpress.org/download/">Wordpress</a> blog or other CMS at a blog subdomain</li>
+                <li>Setup a file server for sharing files with friends and family using something like <a href="https://nextcloud.com/">Nextcloud</a></li>
+                <li>Host a <a href="https://minecraft.fandom.com/wiki/Tutorials/Setting_up_a_server#Docker">Minecraft</a> server for you and your friends</li>
+                <li>Setup <a href="https://hub.docker.com/r/linuxserver/plex">Plex</a> to stream your media library to any device with an internet connection</li>
+                <li>Configure a <a href="https://hub.docker.com/r/linuxserver/qbittorrent">Bittorrent</a> client to download torrents directly to your server (and then stream them on any device for free with Plex)</li>
+            </ul>
+            <p>There are plenty of other things you can do with a home server, but these are just a few ideas to get you started. With a home server, you can host whatever you want, so get creative (just don't get your IP banned from Cloudflare).</p>
+        </div>
+        <div class="sidebar">
+            <nav>
+                <a href="/">Home</a>
+                <a href="/projects">Projects</a>
+                <a href="/blog">Blog</a>
+                <a href="/bookshelf">Bookshelf</a>
+            </nav>
+        </div>
+    </body>
+</html>
