@@ -16,7 +16,7 @@ def connect():
 
 def parseReview(file):
     with open(file, 'r') as data:
-        return data.read().replace('\n', '<br/>').replace('\t', '&nbsp')
+        return data.read()
 
 
 def getArgVals(args):

@@ -1,0 +1,19 @@
+{% block body %}
+<div style="display: flex; flex-direction: row; width: 100%;">
+    <img src="{{ coverImage }}" style="width: 20%; margin: 1em;"/>
+    <div>
+        <a class="recent_like_title" href="{{ link }}">{{ title }}</a>
+        <div class="recent_like_details">
+            <p>{{ author }}</p>
+            <p style="text-align: right;">{{ dateRead }}</p>
+        </div>
+        <p>{{ review }}</p>
+        <div style="display: flex; flex-direction: row;">
+            {% for tag in tags %}
+            <p style="border: 1px solid {{ tag['colour'] }}; border-radius: 10px; width: fit-content; color: {{ tag['colour'] }};">{{ tag['name'] }}</p>
+            {% endfor %}
+        </div>
+    </div>
+</div>
+<hr>
+{% endblock %}
