@@ -7,7 +7,7 @@
             <p>{{ author }}</p>
             <p style="text-align: right;">{{ dateRead }}</p>
         </div>
-        <p>{{ review }}</p>
+        <p class="review_text">{{ review }}</p>
         <div style="display: flex; flex-direction: row; flex-wrap: wrap; width: 100%;">
             {% for tag in tags %}
             <p class="book_tag" style="border: 1px solid {{ tag['colour'] }}; color: {{ tag['colour'] }};">{{ tag['name'] }}</p>

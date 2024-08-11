@@ -51,3 +51,12 @@ p.book_tag {
     width: fit-content;
     height: fit-content;
 }
+
+p.review_text {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+            line-clamp: 3;
+    -webkit-box-orient: vertical;
+}
