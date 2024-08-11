@@ -24,6 +24,13 @@ def upvoted():
     posts = requests.get(f"http://api:5000/getUpvoted/{session['page']}")
     return posts.text
 
+@app.route("/books/", methods=['GET'])
+def books():
+    if not htmx:
+        return "Error getting recently liked posts"
+    books = requests.get(f"http://api:5000/getBooks")
+    return books.text
+
 @app.route("/getResume", methods=['GET'])
 def getResume():
     return send_file('static/files/Matheus Duncan Resume.pdf', mimetype='application/pdf')
