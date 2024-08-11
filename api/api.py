@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from pymongo import MongoClient
+from pymongo import MongoClient, DESCENDING
 import os
 
 app = Flask(__name__)
@@ -26,7 +26,7 @@ def get_hn_posts(page):
 
 def buildBookshelf():
     db = connect()
-    books = [book for book in db.books.find()]
+    books = [book for book in db.books.find().sort('date_read', DESCENDING)]
     books_html = []
     for book in books:
         tags = []
@@ -38,7 +38,7 @@ def buildBookshelf():
                                           title=book['title'],
                                           author=book['author'],
                                           link=f"https://openlibrary.org/isbn/{book['isbn']}",
-                                          dateRead=f"{book['date_read'][4:]}/{book['date_read'][:3]}",
+                                          dateRead=f"{book['date_read'][4:]}/{book['date_read'][:4]}",
                                           review=book['review'],
                                           coverImage=book['cover_image'],
                                           tags=tags))
