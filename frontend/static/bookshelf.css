@@ -52,7 +52,7 @@ p.book_tag {
     height: fit-content;
 }
 
-p.review_text {
+p.review_text_short {
     text-overflow: ellipsis;
     overflow: hidden;
     display: -webkit-box;

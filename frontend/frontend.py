@@ -31,6 +31,16 @@ def books():
     books = requests.get(f"http://api:5000/getBooks")
     return books.text
 
+@app.route("/fullReview/<isbn>")
+def fullReview(isbn):
+    review = requests.get(f"http://api:5000/longReview/{isbn}")
+    return review.text
+
+@app.route("/shortReview/<isbn>")
+def shortReview(isbn):
+    review = requests.get(f"http://api:5000/shortReview/{isbn}")
+    return review.text
+
 @app.route("/getResume", methods=['GET'])
 def getResume():
     return send_file('static/files/Matheus Duncan Resume.pdf', mimetype='application/pdf')

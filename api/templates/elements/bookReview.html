@@ -2,13 +2,16 @@
 <div class="review">
     <img src="{{ coverImage }}" class="book_cover"/>
     <div>
-        <a class="book_title" href="{{ link }}">{{ title }}</a>
+        <a class="book_title" href="https://openlibrary.org/isbn/{{ isbn }}">{{ title }}</a>
         <div class="book_details">
             <p>{{ author }}</p>
             <p style="text-align: right;">{{ dateRead }}</p>
         </div>
-        <p class="review_text">{{ review }}</p>
-        <div style="display: flex; flex-direction: row; flex-wrap: wrap; width: 100%;">
+        <div id="review_div">
+            <p class="review_text_short">{{ review }}</p>
+            <button hx-get="/fullReview/{{ isbn }}" hx-target="closest div" hx-trigger="click" hx-swap="innerHTML">Read More</button>
+        </div>
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; width: 100%; margin-top: 10px;">
             {% for tag in tags %}
             <p class="book_tag" style="border: 1px solid {{ tag['colour'] }}; color: {{ tag['colour'] }};">{{ tag['name'] }}</p>
             {% endfor %}

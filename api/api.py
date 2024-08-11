@@ -37,7 +37,7 @@ def buildBookshelf():
         books_html.append(render_template('elements/bookReview.html',
                                           title=book['title'],
                                           author=book['author'],
-                                          link=f"https://openlibrary.org/isbn/{book['isbn']}",
+                                          isbn=book['isbn'],
                                           dateRead=f"{book['date_read'][4:]}/{book['date_read'][:4]}",
                                           review=book['review'],
                                           coverImage=book['cover_image'],
@@ -45,6 +45,19 @@ def buildBookshelf():
     return "".join(books_html)
 
 
+def getReview(isbn):
+    db = connect()
+    book = db.books.find_one({'isbn': isbn})
+    return book['review']
+
+
+@app.route("/longReview/<isbn>")
+def longReview(isbn):
+    return render_template('elements/longReview.html', review=getReview(isbn), isbn=isbn)
+
+@app.route("/shortReview/<isbn>")
+def shortReview(isbn):
+    return render_template('elements/shortReview.html', review=getReview(isbn), isbn=isbn)
 
 @app.route("/getTag")
 def getTag():
