@@ -6,6 +6,7 @@
         <meta name="description" content="Collection of books I've recently read and reviewed.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="../static/base.css" />
+        <link rel="stylesheet" href="../static/bookshelf.css" />
         <link rel="icon" href="../static/images/favicon.ico" />
         <script src="https://kit.fontawesome.com/4b821a89f2.js" crossorigin="anonymous"></script>
         <script src="https://unpkg.com/htmx.org@2.0.1" integrity="sha384-QWGpdj554B4ETpJJC9z+ZHJcA/i59TyjxEPXiiUgN2WmTyV5OEZWCD6gQhgkdpB/" crossorigin="anonymous"></script>
@@ -43,16 +44,9 @@
         <div class="mainPage">
             <h1>Bookshelf</h1>
             <div id="books" hx-get="/books/" hx-trigger="load"></div>
-            <div class="construction">
-                <img src="../../static/images/construction-sign.gif" alt="construction sign">
-                <p>This page is currently under construction!<br/><br/>
-                    My plan for this page is to have a list of recently-read books that show my rating, dates read, and review.
-                    I'll also have a tag feature that allows visitors to filter what books they're seeing based on e.g. genre.
-                    This is mostly just a place for me to work on using the Google Books API and implement some more backend features,
-                    i.e. a CLI tool to add new books to the DB and have as much of this process automated as possible.<br/><br/>
-                    If you still want to see what I've been reading, checkout my <a href="https://www.goodreads.com/user/show/160707885-matheus">goodreads</a>.
-                </p>
-            </div>
+            <footer>
+                <p>Want to see more about my books or follow me for updates? Check out my <a href="https://www.goodreads.com/user/show/160707885-matheus">goodreads</a>.</p>
+            </footer>
         </div>
         <div class="sidebar">
             <nav>

@@ -1,16 +1,16 @@
 {% block body %}
-<div style="display: flex; flex-direction: row; width: 100%;">
-    <img src="{{ coverImage }}" style="width: 20%; height: 20%; margin: 1em;"/>
+<div class="review">
+    <img src="{{ coverImage }}" class="book_cover"/>
     <div>
-        <a class="recent_like_title" href="{{ link }}">{{ title }}</a>
-        <div class="recent_like_details">
+        <a class="book_title" href="{{ link }}">{{ title }}</a>
+        <div class="book_details">
             <p>{{ author }}</p>
             <p style="text-align: right;">{{ dateRead }}</p>
         </div>
         <p>{{ review }}</p>
-        <div style="display: flex; flex-direction: row;">
+        <div style="display: flex; flex-direction: row; flex-wrap: wrap; width: 100%;">
             {% for tag in tags %}
-            <p style="border: 1px solid {{ tag['colour'] }}; border-radius: 10px; width: fit-content; color: {{ tag['colour'] }};">{{ tag['name'] }}</p>
+            <p class="book_tag" style="border: 1px solid {{ tag['colour'] }}; color: {{ tag['colour'] }};">{{ tag['name'] }}</p>
             {% endfor %}
         </div>
     </div>
