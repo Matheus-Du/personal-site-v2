@@ -168,4 +168,3 @@ package-lock.json
 # Docker
 db_data/
 credentials.json
-reviews/

@@ -1,0 +1,9 @@
+{
+    "title": "title",
+    "author": "author",
+    "isbn": "isbn",
+    "rating": "rating",
+    "cover_image": "cover",
+    "date_read": "YYYMM",
+    "review": "/reviews/review.txt"
+}

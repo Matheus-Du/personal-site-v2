@@ -1,4 +1,4 @@
-import requests
+import json
 import sys
 from dotenv import load_dotenv
 import os, os.path
@@ -24,6 +24,7 @@ def getArgVals(args):
         'title': None,
         'isbn': None,
         'author': None,
+        'rating': None,
         'date_read': None,
         'cover_image': None,
         'review': None,
@@ -36,7 +37,8 @@ def getArgVals(args):
         elif args[i] == '-a': data['author'] = args[i+1]
         elif args[i] == '-d': data['date_read'] = args[i+1]
         elif args[i] == '-c': data['cover_image'] = args[i+1]
-        elif args[i] == '-r': data['review'] = parseReview(args[i+1])
+        elif args[i] == '-ra': data['rating'] = args[i+1]
+        elif args[i] == '-re': data['review'] = parseReview(args[i+1])
     for key in data.keys():
         if data[key] == None:
             data[key] = input(f"Enter value for {key}: ")
@@ -65,9 +67,15 @@ def main():
 
     args = sys.argv[1:]
     if len(args) == 0 or '-h' in args:
-        print("Usage: python bookshelf.cli -t <book title> -a <author> -i <isbn> -r <path/to/review.txt> -d <date read (YYYYMM)> -c <cover image link>")
+        print("Usage: python bookshelf.cli -t <book title> -a <author> -i <isbn> -ra <rating>/5 -re <path/to/review.txt> -d <date read (YYYYMM)> -c <cover image link>")
         return
-    data = getArgVals(args)
+    data = None
+    if len(args) == 1:
+        with open(args[0], 'r') as file:
+            data = json.load(file)
+            data['review'] = parseReview(data['review'])
+    else: data = getArgVals(args)
+
     existingTags = getTags(db.book_tags)
     data['tags'] = addTags([], existingTags)
     for tag in data['tags']:
