@@ -13,7 +13,7 @@ Uses a container running a __MongoDB__ instance to store data. The Docker contai
 ## Deployment
 The entire stack is deployed using __Docker Compose__ to allow for efficient containerization and networking between the different containers. This makes startup and updating simple while also providing consistency between the dev and prod environments. The Frontend and Backend __Flask__ applications are run in prod using __Gunicorn__.
 
-The container stack is deployed on an __Ubuntu__ Home Server. __Nginx__ is used for routing incoming requests to the Frontend container port and for ensuring secure __HTTPS__ connections using __SSL/TLS__. A __Cloudflare Reverse Proxy__ is placed in front of this to block malicious traffic and provide common __CDN__ fucntionality such as cacheing and locality.
+The container stack is deployed on an __Ubuntu__ Home Server. __Nginx__ is used for routing incoming requests to the Frontend container port and for ensuring secure __HTTPS__ connections using __SSL/TLS__. A __Cloudflare Reverse Proxy__ is placed in front of this to block malicious traffic and provide common __CDN__ functionality such as cacheing and locality.
 
 When new code is pushed to main, a __Github Actions__ script runs to update the prod deployment automatically using a __self-hosted runner__. This makes the deployment process painless while ensuring that the production system is identical to the dev environment. The end result is me spending essentially no time debugging in prod. This is protected by GitHub actions settings to ensure the self-hosted runner can't execute any code from outside collaborators.
 
