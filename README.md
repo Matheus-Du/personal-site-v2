@@ -15,7 +15,7 @@ The entire stack is deployed using __Docker Compose__ to allow for efficient con
 
 The container stack is deployed on an __Ubuntu__ Home Server. __Nginx__ is used for routing incoming requests to the Frontend container port and for ensuring secure __HTTPS__ connections using __SSL/TLS__. A __Cloudflare Reverse Proxy__ is placed in front of this to block malicious traffic and provide common __CDN__ fucntionality such as cacheing and locality.
 
-When new code is pushed to main, a __Github Actions__ script runs to update the prod deployment automatically using a __self-hosted runner__. This makes the deployment process painless while ensuring that the production system is identical to the dev environment. The end result is me spending essentially no time debugging in prod.
+When new code is pushed to main, a __Github Actions__ script runs to update the prod deployment automatically using a __self-hosted runner__. This makes the deployment process painless while ensuring that the production system is identical to the dev environment. The end result is me spending essentially no time debugging in prod. This is protected by GitHub actions settings to ensure the self-hosted runner can't execute any code from outside collaborators.
 
 ## Future Plans
 I'd like to continue using this site to write blog posts and project retrospectives in my free time. __RSS__ feed functionality would allow other people to get updates on this, so it's a feature I'd like to implement, especially since it would allow me to work with something I've never interacted with before (even if that requires touching XML...).
