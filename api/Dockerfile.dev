@@ -4,8 +4,11 @@ WORKDIR /app
 
 COPY requirements.txt /app
 RUN pip install --no-cache-dir --upgrade -r requirements.txt
+RUN adduser --system --no-create-home nonroot
 
 COPY . /app
 
 ENTRYPOINT [ "python3" ]
+
+USER nonroot
 CMD ["api.py"]
