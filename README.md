@@ -1,3 +1,5 @@
+[!Docker Build](https://github.com/Matheus-Du/personal-site-v2/actions/workflows/docker-image.yml/badge.svg)](https://github.com/Matheus-Du/personal-site-v2/actions/workflows/docker-image.yml)
+
 # personal-site-v2
 Revamped personal site written with __HTMX__ and __Flask__ (for now) with a new UI and some API (and scraping) integrations. Used as a place to write some stuff, show off what I've been reading, and display some internet things that I've liked recently. Deployed on my __Linux__ Home Server using __Docker__, __Nginx__, and __Cloudflare CDN__. This updated site came about mainly due to frustration around updating and deploying my old personal site built with React; I wanted to create a platform that was easy to develop new features for by focusing on container orchestration and __CI/CD__. The result is a simple and efficient deployment experience that makes developing new features actually fun and interesting (mainly due to the fact that I'm not spending most of my time debugging in prod to find issues missed during deployment).
 
