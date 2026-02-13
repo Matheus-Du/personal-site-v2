@@ -2,7 +2,7 @@ import json
 import sys
 from dotenv import load_dotenv
 import os, os.path
-from pymongo import MongoClient, timeout as pymongo_timeout
+from pymongo import MongoClient
 from pymongo.errors import PyMongoError
 
 
@@ -42,7 +42,7 @@ def getArgVals(args):
     for key in data.keys():
         if data[key] == None:
             data[key] = input(f"Enter value for {key}: ")
-    
+
     return data
 
 
