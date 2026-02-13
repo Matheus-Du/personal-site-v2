@@ -3,7 +3,7 @@ import requests
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import os
-from pymongo import MongoClient, timeout as pymongo_timeout
+from pymongo import MongoClient
 from pymongo.errors import PyMongoError, ConnectionFailure, OperationFailure
 from datetime import datetime, timezone
 
